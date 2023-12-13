@@ -8,7 +8,7 @@
 * @date: 2014.11.15
 */
 
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 
 #pragma once
 
