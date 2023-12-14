@@ -26,7 +26,8 @@ KalmanFilter::KalmanFilter(
 
 KalmanFilter::KalmanFilter() {}
 
-void KalmanFilter::init(double t0, const Eigen::VectorXd& x0) {
+void KalmanFilter::init(double t0, const Eigen::VectorXd& x0) 
+{
   x_hat = x0;
   P = P0;
   this->t0 = t0;
@@ -34,7 +35,8 @@ void KalmanFilter::init(double t0, const Eigen::VectorXd& x0) {
   initialized = true;
 }
 
-void KalmanFilter::init() {
+void KalmanFilter::init() 
+{
   x_hat.setZero();
   P = P0;
   t0 = 0;
@@ -42,8 +44,8 @@ void KalmanFilter::init() {
   initialized = true;
 }
 
-void KalmanFilter::update(const Eigen::VectorXd& y) {
-
+void KalmanFilter::predict_and_update(const Eigen::VectorXd& y) 
+{
   if(!initialized)
     throw std::runtime_error("Filter is not initialized!");
 
@@ -57,9 +59,9 @@ void KalmanFilter::update(const Eigen::VectorXd& y) {
   t += dt;
 }
 
-void KalmanFilter::update(const Eigen::VectorXd& y, double dt, const Eigen::MatrixXd A) {
-
+void KalmanFilter::predict_and_update(const Eigen::VectorXd& y, double dt, const Eigen::MatrixXd A) 
+{
   this->A = A;
   this->dt = dt;
-  update(y);
+  predict_and_update(y);
 }
