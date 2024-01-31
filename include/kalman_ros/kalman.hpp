@@ -56,22 +56,46 @@ public:
 
   /**
   * Update the estimated state based on measured values,
-  * using the given time step and dynamics matrix.
+  * using the given time step and the dynamics matrix.
   */
   void predict_and_update(const Eigen::VectorXd& y, double dt, const Eigen::MatrixXd A);
 
   /**
-  * Return the current state and time.
+  * Update the estimated state based on measured values,
+  * using the given time step, the dynamics matrix and the measurement noise covariance.
+  */
+  void predict_and_update(const Eigen::VectorXd& y, double dt, const Eigen::MatrixXd A, const Eigen::MatrixXd R);
+
+  /**
+  * Update the estimated state based on a estimated possible measure,
+  * using the given time step and the dynamics matrix.
+  */
+  void predict_and_estimate(double dt, const Eigen::MatrixXd A);
+
+  /**
+  * Return the current state, covariance and time.
   */
   Eigen::VectorXd state() 
   { 
     return x_hat; 
   };
 
+  Eigen::MatrixXd covariance() 
+  { 
+    return P; 
+  };
+
   double time() 
   { 
     return t; 
   };
+
+  /**
+   * Compute quadratic normalized innovation using the
+   * measure at k+1, the state at k and the matrices
+   * A and C at k+1.
+  */
+  Eigen::VectorXd compute_innovation(const Eigen::VectorXd& y, const Eigen::MatrixXd A, const Eigen::MatrixXd C);
 
 private:
 
